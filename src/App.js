@@ -1,23 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import AddProduct from "./components/AddProduct";
+import Inventory from "./components/Inventory";
+import ShopInventory from "./components/ShopInventory";
 
 function App() {
+
+  const [products, setProducts] = useState([])
+  const [shop, setShop] = useState([])
+  const [inventorySelected, setInventorySelected] = useState(0)
+
+  function addProd(photo) {
+    const price = Math.ceil(Math.random() * 100)
+
+    const newProd = {
+      photo,
+      price
+    }
+
+    setProducts([...products, newProd])
+  }
+
+  function sellProd() {
+
+  }
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <AddProduct addProd={addProd} />
+      <div className="prodContainer">
+        <Inventory sellProd={sellProd} products={products} selected={inventorySelected} setSelected={setInventorySelected} />
+      </div>
+
+      <div className="prodContainer">
+        <ShopInventory />
+      </div>
     </div>
   );
 }
